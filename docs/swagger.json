@@ -1,0 +1,1275 @@
+{
+  "openapi": "3.0.3",
+  "info": {
+    "title": "EVENT 221 API",
+    "description": "Documentation Swagger/OpenAPI de l'API de gestion du centre d'evenements EVENT 221.",
+    "version": "1.0.0"
+  },
+  "servers": [
+    {
+      "url": "http://localhost:3001",
+      "description": "Serveur local"
+    }
+  ],
+  "tags": [
+    {
+      "name": "Health"
+    },
+    {
+      "name": "Clients"
+    },
+    {
+      "name": "Prestataires"
+    },
+    {
+      "name": "Espaces"
+    },
+    {
+      "name": "Reservations"
+    }
+  ],
+  "paths": {
+    "/health": {
+      "get": {
+        "tags": [
+          "Health"
+        ],
+        "summary": "Verifier l'etat de l'API",
+        "responses": {
+          "200": {
+            "description": "API disponible",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HealthResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/clients": {
+      "get": {
+        "tags": [
+          "Clients"
+        ],
+        "summary": "Lister les clients",
+        "responses": {
+          "200": {
+            "$ref": "#/components/responses/ClientListOk"
+          },
+          "500": {
+            "$ref": "#/components/responses/InternalServerError"
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Clients"
+        ],
+        "summary": "Creer un client",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateClientRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "$ref": "#/components/responses/ClientItemCreated"
+          },
+          "400": {
+            "$ref": "#/components/responses/ValidationError"
+          },
+          "409": {
+            "$ref": "#/components/responses/ConflictError"
+          },
+          "500": {
+            "$ref": "#/components/responses/InternalServerError"
+          }
+        }
+      }
+    },
+    "/api/v1/clients/{id}": {
+      "get": {
+        "tags": [
+          "Clients"
+        ],
+        "summary": "Recuperer un client",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/IdParam"
+          }
+        ],
+        "responses": {
+          "200": {
+            "$ref": "#/components/responses/ClientItemOk"
+          },
+          "404": {
+            "$ref": "#/components/responses/NotFoundError"
+          },
+          "500": {
+            "$ref": "#/components/responses/InternalServerError"
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Clients"
+        ],
+        "summary": "Supprimer un client",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/IdParam"
+          }
+        ],
+        "responses": {
+          "200": {
+            "$ref": "#/components/responses/DeleteOk"
+          },
+          "404": {
+            "$ref": "#/components/responses/NotFoundError"
+          },
+          "409": {
+            "$ref": "#/components/responses/ConflictError"
+          },
+          "500": {
+            "$ref": "#/components/responses/InternalServerError"
+          }
+        }
+      }
+    },
+    "/api/v1/prestataires": {
+      "get": {
+        "tags": [
+          "Prestataires"
+        ],
+        "summary": "Lister les prestataires",
+        "responses": {
+          "200": {
+            "$ref": "#/components/responses/PrestataireListOk"
+          },
+          "500": {
+            "$ref": "#/components/responses/InternalServerError"
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Prestataires"
+        ],
+        "summary": "Creer un prestataire",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreatePrestataireRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "$ref": "#/components/responses/PrestataireItemCreated"
+          },
+          "400": {
+            "$ref": "#/components/responses/ValidationError"
+          },
+          "409": {
+            "$ref": "#/components/responses/ConflictError"
+          },
+          "500": {
+            "$ref": "#/components/responses/InternalServerError"
+          }
+        }
+      }
+    },
+    "/api/v1/prestataires/{id}": {
+      "get": {
+        "tags": [
+          "Prestataires"
+        ],
+        "summary": "Recuperer un prestataire",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/IdParam"
+          }
+        ],
+        "responses": {
+          "200": {
+            "$ref": "#/components/responses/PrestataireItemOk"
+          },
+          "404": {
+            "$ref": "#/components/responses/NotFoundError"
+          },
+          "500": {
+            "$ref": "#/components/responses/InternalServerError"
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Prestataires"
+        ],
+        "summary": "Supprimer un prestataire",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/IdParam"
+          }
+        ],
+        "responses": {
+          "200": {
+            "$ref": "#/components/responses/DeleteOk"
+          },
+          "404": {
+            "$ref": "#/components/responses/NotFoundError"
+          },
+          "409": {
+            "$ref": "#/components/responses/ConflictError"
+          },
+          "500": {
+            "$ref": "#/components/responses/InternalServerError"
+          }
+        }
+      }
+    },
+    "/api/v1/espaces": {
+      "get": {
+        "tags": [
+          "Espaces"
+        ],
+        "summary": "Lister les espaces",
+        "responses": {
+          "200": {
+            "$ref": "#/components/responses/EspaceListOk"
+          },
+          "500": {
+            "$ref": "#/components/responses/InternalServerError"
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Espaces"
+        ],
+        "summary": "Creer un espace",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateEspaceRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "$ref": "#/components/responses/EspaceItemCreated"
+          },
+          "400": {
+            "$ref": "#/components/responses/ValidationError"
+          },
+          "409": {
+            "$ref": "#/components/responses/ConflictError"
+          },
+          "500": {
+            "$ref": "#/components/responses/InternalServerError"
+          }
+        }
+      }
+    },
+    "/api/v1/espaces/{id}": {
+      "get": {
+        "tags": [
+          "Espaces"
+        ],
+        "summary": "Recuperer un espace",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/IdParam"
+          }
+        ],
+        "responses": {
+          "200": {
+            "$ref": "#/components/responses/EspaceItemOk"
+          },
+          "404": {
+            "$ref": "#/components/responses/NotFoundError"
+          },
+          "500": {
+            "$ref": "#/components/responses/InternalServerError"
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Espaces"
+        ],
+        "summary": "Supprimer un espace",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/IdParam"
+          }
+        ],
+        "responses": {
+          "200": {
+            "$ref": "#/components/responses/DeleteOk"
+          },
+          "404": {
+            "$ref": "#/components/responses/NotFoundError"
+          },
+          "409": {
+            "$ref": "#/components/responses/ConflictError"
+          },
+          "500": {
+            "$ref": "#/components/responses/InternalServerError"
+          }
+        }
+      }
+    },
+    "/api/v1/reservations": {
+      "get": {
+        "tags": [
+          "Reservations"
+        ],
+        "summary": "Lister les reservations",
+        "responses": {
+          "200": {
+            "$ref": "#/components/responses/ReservationListOk"
+          },
+          "500": {
+            "$ref": "#/components/responses/InternalServerError"
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Reservations"
+        ],
+        "summary": "Creer une reservation",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateReservationRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "$ref": "#/components/responses/ReservationItemCreated"
+          },
+          "400": {
+            "$ref": "#/components/responses/ValidationError"
+          },
+          "404": {
+            "$ref": "#/components/responses/NotFoundError"
+          },
+          "409": {
+            "$ref": "#/components/responses/ConflictError"
+          },
+          "422": {
+            "$ref": "#/components/responses/UnprocessableError"
+          },
+          "500": {
+            "$ref": "#/components/responses/InternalServerError"
+          }
+        }
+      }
+    },
+    "/api/v1/reservations/{id}": {
+      "get": {
+        "tags": [
+          "Reservations"
+        ],
+        "summary": "Recuperer une reservation",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/IdParam"
+          }
+        ],
+        "responses": {
+          "200": {
+            "$ref": "#/components/responses/ReservationItemOk"
+          },
+          "404": {
+            "$ref": "#/components/responses/NotFoundError"
+          },
+          "500": {
+            "$ref": "#/components/responses/InternalServerError"
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "parameters": {
+      "IdParam": {
+        "name": "id",
+        "in": "path",
+        "required": true,
+        "schema": {
+          "type": "integer",
+          "minimum": 1,
+          "example": 1
+        }
+      }
+    },
+    "responses": {
+      "ValidationError": {
+        "description": "Donnees invalides",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/ValidationErrorResponse"
+            }
+          }
+        }
+      },
+      "NotFoundError": {
+        "description": "Ressource introuvable",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/ErrorResponse"
+            }
+          }
+        }
+      },
+      "ConflictError": {
+        "description": "Conflit metier",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/ErrorResponse"
+            }
+          }
+        }
+      },
+      "UnprocessableError": {
+        "description": "Regle metier non respectee",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/ErrorResponse"
+            }
+          }
+        }
+      },
+      "InternalServerError": {
+        "description": "Erreur interne",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/ErrorResponse"
+            }
+          }
+        }
+      },
+      "DeleteOk": {
+        "description": "Suppression effectuee",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/DeleteResponse"
+            }
+          }
+        }
+      },
+      "ClientListOk": {
+        "description": "Liste des clients",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/ClientListResponse"
+            }
+          }
+        }
+      },
+      "ClientItemOk": {
+        "description": "Client trouve",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/ClientItemResponse"
+            }
+          }
+        }
+      },
+      "ClientItemCreated": {
+        "description": "Client cree",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/ClientItemResponse"
+            }
+          }
+        }
+      },
+      "PrestataireListOk": {
+        "description": "Liste des prestataires",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/PrestataireListResponse"
+            }
+          }
+        }
+      },
+      "PrestataireItemOk": {
+        "description": "Prestataire trouve",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/PrestataireItemResponse"
+            }
+          }
+        }
+      },
+      "PrestataireItemCreated": {
+        "description": "Prestataire cree",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/PrestataireItemResponse"
+            }
+          }
+        }
+      },
+      "EspaceListOk": {
+        "description": "Liste des espaces",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/EspaceListResponse"
+            }
+          }
+        }
+      },
+      "EspaceItemOk": {
+        "description": "Espace trouve",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/EspaceItemResponse"
+            }
+          }
+        }
+      },
+      "EspaceItemCreated": {
+        "description": "Espace cree",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/EspaceItemResponse"
+            }
+          }
+        }
+      },
+      "ReservationListOk": {
+        "description": "Liste des reservations",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/ReservationListResponse"
+            }
+          }
+        }
+      },
+      "ReservationItemOk": {
+        "description": "Reservation trouvee",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/ReservationItemResponse"
+            }
+          }
+        }
+      },
+      "ReservationItemCreated": {
+        "description": "Reservation creee",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/ReservationItemResponse"
+            }
+          }
+        }
+      }
+    },
+    "schemas": {
+      "TypeClient": {
+        "type": "string",
+        "enum": [
+          "PARTICULIER",
+          "ENTREPRISE"
+        ]
+      },
+      "TypePrestataire": {
+        "type": "string",
+        "enum": [
+          "TRAITEUR",
+          "DJ",
+          "PHOTOGRAPHE",
+          "DECORATEUR"
+        ]
+      },
+      "TypeEspace": {
+        "type": "string",
+        "enum": [
+          "SALLE_DE_CONFERENCE",
+          "JARDIN",
+          "ROOFTOP",
+          "SALLE_DE_FETE"
+        ]
+      },
+      "StatutReservation": {
+        "type": "string",
+        "enum": [
+          "CONFIRMEE",
+          "ANNULEE",
+          "TERMINEE"
+        ]
+      },
+      "HealthResponse": {
+        "type": "object",
+        "properties": {
+          "status": {
+            "type": "string",
+            "example": "OK"
+          },
+          "app": {
+            "type": "string",
+            "example": "EVENT 221 API"
+          }
+        },
+        "required": [
+          "status",
+          "app"
+        ]
+      },
+      "ValidationDetail": {
+        "type": "object",
+        "properties": {
+          "field": {
+            "type": "string",
+            "example": "email"
+          },
+          "message": {
+            "type": "string",
+            "example": "L'email doit etre valide."
+          }
+        },
+        "required": [
+          "field",
+          "message"
+        ]
+      },
+      "ErrorResponse": {
+        "type": "object",
+        "properties": {
+          "success": {
+            "type": "boolean",
+            "example": false
+          },
+          "message": {
+            "type": "string",
+            "example": "Une erreur est survenue."
+          },
+          "details": {
+            "type": "array",
+            "nullable": true,
+            "items": {
+              "$ref": "#/components/schemas/ValidationDetail"
+            }
+          }
+        },
+        "required": [
+          "success",
+          "message"
+        ]
+      },
+      "ValidationErrorResponse": {
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/ErrorResponse"
+          },
+          {
+            "type": "object",
+            "properties": {
+              "details": {
+                "type": "array",
+                "items": {
+                  "$ref": "#/components/schemas/ValidationDetail"
+                }
+              }
+            }
+          }
+        ]
+      },
+      "DeleteResponse": {
+        "type": "object",
+        "properties": {
+          "success": {
+            "type": "boolean",
+            "example": true
+          },
+          "message": {
+            "type": "string",
+            "example": "Ressource supprimee avec succes."
+          },
+          "data": {
+            "type": "null",
+            "example": null
+          }
+        },
+        "required": [
+          "success",
+          "message",
+          "data"
+        ]
+      },
+      "Client": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "example": 1
+          },
+          "prenom": {
+            "type": "string",
+            "example": "Awa"
+          },
+          "nom": {
+            "type": "string",
+            "example": "Diop"
+          },
+          "email": {
+            "type": "string",
+            "format": "email",
+            "example": "awa.diop@example.com"
+          },
+          "telephone": {
+            "type": "string",
+            "example": "+221770000000"
+          },
+          "type": {
+            "$ref": "#/components/schemas/TypeClient"
+          },
+          "createdAt": {
+            "type": "string",
+            "format": "date-time",
+            "example": "2026-04-03T20:15:00.000Z"
+          },
+          "updatedAt": {
+            "type": "string",
+            "format": "date-time",
+            "example": "2026-04-03T20:15:00.000Z"
+          }
+        },
+        "required": [
+          "id",
+          "prenom",
+          "nom",
+          "email",
+          "telephone",
+          "type",
+          "createdAt",
+          "updatedAt"
+        ]
+      },
+      "Prestataire": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "example": 1
+          },
+          "nom": {
+            "type": "string",
+            "example": "DJ Sunset"
+          },
+          "type": {
+            "$ref": "#/components/schemas/TypePrestataire"
+          },
+          "email": {
+            "type": "string",
+            "format": "email",
+            "example": "contact@djsunset.com"
+          },
+          "telephone": {
+            "type": "string",
+            "example": "+221780000000"
+          },
+          "createdAt": {
+            "type": "string",
+            "format": "date-time",
+            "example": "2026-04-03T20:15:00.000Z"
+          },
+          "updatedAt": {
+            "type": "string",
+            "format": "date-time",
+            "example": "2026-04-03T20:15:00.000Z"
+          }
+        },
+        "required": [
+          "id",
+          "nom",
+          "type",
+          "email",
+          "telephone",
+          "createdAt",
+          "updatedAt"
+        ]
+      },
+      "Espace": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "example": 1
+          },
+          "code": {
+            "type": "string",
+            "example": "ESP-001"
+          },
+          "nom": {
+            "type": "string",
+            "example": "Salle Baobab"
+          },
+          "capaciteMax": {
+            "type": "integer",
+            "minimum": 1,
+            "example": 250
+          },
+          "type": {
+            "$ref": "#/components/schemas/TypeEspace"
+          },
+          "prixParJour": {
+            "type": "number",
+            "format": "float",
+            "example": 150000
+          },
+          "createdAt": {
+            "type": "string",
+            "format": "date-time",
+            "example": "2026-04-03T20:15:00.000Z"
+          },
+          "updatedAt": {
+            "type": "string",
+            "format": "date-time",
+            "example": "2026-04-03T20:15:00.000Z"
+          }
+        },
+        "required": [
+          "id",
+          "code",
+          "nom",
+          "capaciteMax",
+          "type",
+          "prixParJour",
+          "createdAt",
+          "updatedAt"
+        ]
+      },
+      "Reservation": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "example": 1
+          },
+          "clientId": {
+            "type": "integer",
+            "example": 1
+          },
+          "espaceId": {
+            "type": "integer",
+            "example": 1
+          },
+          "prestataireId": {
+            "type": "integer",
+            "nullable": true,
+            "example": 1
+          },
+          "dateEvenement": {
+            "type": "string",
+            "format": "date",
+            "example": "2026-05-20"
+          },
+          "nombreInvites": {
+            "type": "integer",
+            "minimum": 1,
+            "example": 120
+          },
+          "montantTotal": {
+            "type": "number",
+            "format": "float",
+            "example": 150000
+          },
+          "statut": {
+            "$ref": "#/components/schemas/StatutReservation"
+          },
+          "createdAt": {
+            "type": "string",
+            "format": "date-time",
+            "example": "2026-04-03T20:15:00.000Z"
+          },
+          "updatedAt": {
+            "type": "string",
+            "format": "date-time",
+            "example": "2026-04-03T20:15:00.000Z"
+          },
+          "client": {
+            "$ref": "#/components/schemas/Client"
+          },
+          "espace": {
+            "$ref": "#/components/schemas/Espace"
+          },
+          "prestataire": {
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/Prestataire"
+              }
+            ],
+            "nullable": true
+          }
+        },
+        "required": [
+          "id",
+          "clientId",
+          "espaceId",
+          "prestataireId",
+          "dateEvenement",
+          "nombreInvites",
+          "montantTotal",
+          "statut",
+          "createdAt",
+          "updatedAt",
+          "client",
+          "espace",
+          "prestataire"
+        ]
+      },
+      "CreateClientRequest": {
+        "type": "object",
+        "required": [
+          "prenom",
+          "nom",
+          "email",
+          "telephone",
+          "type"
+        ],
+        "properties": {
+          "prenom": {
+            "type": "string",
+            "example": "Awa"
+          },
+          "nom": {
+            "type": "string",
+            "example": "Diop"
+          },
+          "email": {
+            "type": "string",
+            "format": "email",
+            "example": "awa.diop@example.com"
+          },
+          "telephone": {
+            "type": "string",
+            "example": "+221770000000"
+          },
+          "type": {
+            "$ref": "#/components/schemas/TypeClient"
+          }
+        }
+      },
+      "CreatePrestataireRequest": {
+        "type": "object",
+        "required": [
+          "nom",
+          "type",
+          "email",
+          "telephone"
+        ],
+        "properties": {
+          "nom": {
+            "type": "string",
+            "example": "DJ Sunset"
+          },
+          "type": {
+            "$ref": "#/components/schemas/TypePrestataire"
+          },
+          "email": {
+            "type": "string",
+            "format": "email",
+            "example": "contact@djsunset.com"
+          },
+          "telephone": {
+            "type": "string",
+            "example": "+221780000000"
+          }
+        }
+      },
+      "CreateEspaceRequest": {
+        "type": "object",
+        "required": [
+          "code",
+          "nom",
+          "capaciteMax",
+          "type",
+          "prixParJour"
+        ],
+        "properties": {
+          "code": {
+            "type": "string",
+            "example": "ESP-001"
+          },
+          "nom": {
+            "type": "string",
+            "example": "Salle Baobab"
+          },
+          "capaciteMax": {
+            "type": "integer",
+            "minimum": 1,
+            "example": 250
+          },
+          "type": {
+            "$ref": "#/components/schemas/TypeEspace"
+          },
+          "prixParJour": {
+            "type": "number",
+            "format": "float",
+            "minimum": 0.01,
+            "example": 150000
+          }
+        }
+      },
+      "CreateReservationRequest": {
+        "type": "object",
+        "required": [
+          "clientId",
+          "espaceId",
+          "dateEvenement",
+          "nombreInvites"
+        ],
+        "properties": {
+          "clientId": {
+            "type": "integer",
+            "minimum": 1,
+            "example": 1
+          },
+          "espaceId": {
+            "type": "integer",
+            "minimum": 1,
+            "example": 1
+          },
+          "prestataireId": {
+            "type": "integer",
+            "minimum": 1,
+            "nullable": true,
+            "example": 1
+          },
+          "dateEvenement": {
+            "type": "string",
+            "format": "date",
+            "example": "2026-05-20"
+          },
+          "nombreInvites": {
+            "type": "integer",
+            "minimum": 1,
+            "example": 120
+          }
+        }
+      },
+      "ClientListResponse": {
+        "type": "object",
+        "properties": {
+          "success": {
+            "type": "boolean",
+            "example": true
+          },
+          "message": {
+            "type": "string",
+            "example": "Liste des clients recuperee."
+          },
+          "data": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Client"
+            }
+          }
+        },
+        "required": [
+          "success",
+          "message",
+          "data"
+        ]
+      },
+      "ClientItemResponse": {
+        "type": "object",
+        "properties": {
+          "success": {
+            "type": "boolean",
+            "example": true
+          },
+          "message": {
+            "type": "string",
+            "example": "Client recupere."
+          },
+          "data": {
+            "$ref": "#/components/schemas/Client"
+          }
+        },
+        "required": [
+          "success",
+          "message",
+          "data"
+        ]
+      },
+      "PrestataireListResponse": {
+        "type": "object",
+        "properties": {
+          "success": {
+            "type": "boolean",
+            "example": true
+          },
+          "message": {
+            "type": "string",
+            "example": "Liste des prestataires recuperee."
+          },
+          "data": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Prestataire"
+            }
+          }
+        },
+        "required": [
+          "success",
+          "message",
+          "data"
+        ]
+      },
+      "PrestataireItemResponse": {
+        "type": "object",
+        "properties": {
+          "success": {
+            "type": "boolean",
+            "example": true
+          },
+          "message": {
+            "type": "string",
+            "example": "Prestataire recupere."
+          },
+          "data": {
+            "$ref": "#/components/schemas/Prestataire"
+          }
+        },
+        "required": [
+          "success",
+          "message",
+          "data"
+        ]
+      },
+      "EspaceListResponse": {
+        "type": "object",
+        "properties": {
+          "success": {
+            "type": "boolean",
+            "example": true
+          },
+          "message": {
+            "type": "string",
+            "example": "Liste des espaces recuperee."
+          },
+          "data": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Espace"
+            }
+          }
+        },
+        "required": [
+          "success",
+          "message",
+          "data"
+        ]
+      },
+      "EspaceItemResponse": {
+        "type": "object",
+        "properties": {
+          "success": {
+            "type": "boolean",
+            "example": true
+          },
+          "message": {
+            "type": "string",
+            "example": "Espace recupere."
+          },
+          "data": {
+            "$ref": "#/components/schemas/Espace"
+          }
+        },
+        "required": [
+          "success",
+          "message",
+          "data"
+        ]
+      },
+      "ReservationListResponse": {
+        "type": "object",
+        "properties": {
+          "success": {
+            "type": "boolean",
+            "example": true
+          },
+          "message": {
+            "type": "string",
+            "example": "Liste des reservations recuperee."
+          },
+          "data": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Reservation"
+            }
+          }
+        },
+        "required": [
+          "success",
+          "message",
+          "data"
+        ]
+      },
+      "ReservationItemResponse": {
+        "type": "object",
+        "properties": {
+          "success": {
+            "type": "boolean",
+            "example": true
+          },
+          "message": {
+            "type": "string",
+            "example": "Reservation recuperee."
+          },
+          "data": {
+            "$ref": "#/components/schemas/Reservation"
+          }
+        },
+        "required": [
+          "success",
+          "message",
+          "data"
+        ]
+      }
+    }
+  }
+}
