@@ -3,7 +3,7 @@ require('dotenv').config();
 const app    = require('./app');
 const prisma = require('./config/database');
  
-const PORT = process.env.PORT || 3000;
+const PORT = process.env.PORT || 3001;
  
 async function bootstrap() {
   try {

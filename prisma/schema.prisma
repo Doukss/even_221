@@ -1,13 +1,105 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
-
-// Get a free hosted Postgres database in seconds: `npx create-db`
+// prisma/schema.prisma
+// ORM Prisma — base PostgreSQL — EVENT 221
 
 generator client {
-  provider = "prisma-client"
-  output   = "../src/generated/prisma"
+  provider = "prisma-client-js"
 }
 
 datasource db {
   provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+// ─── ENUMS ────────────────────────────────────────────────────────────────────
+
+enum TypeEspace {
+  SALLE_DE_CONFERENCE
+  JARDIN
+  ROOFTOP
+  SALLE_DE_FETE
+}
+
+enum TypePrestataire {
+  TRAITEUR
+  DJ
+  PHOTOGRAPHE
+  DECORATEUR
+}
+
+enum TypeClient {
+  PARTICULIER
+  ENTREPRISE
+}
+
+enum StatutReservation {
+  CONFIRMEE
+  ANNULEE
+  TERMINEE
+}
+
+// ─── MODELS ───────────────────────────────────────────────────────────────────
+
+model Espace {
+  id           Int        @id @default(autoincrement())
+  code         String     @unique          // contrainte unicité → index UNIQUE en BDD
+  nom          String
+  capaciteMax  Int
+  type         TypeEspace
+  prixParJour  Decimal    @db.Decimal(10, 2) // précision monétaire : 99999999.99 max
+  createdAt    DateTime   @default(now())
+  updatedAt    DateTime   @updatedAt         // mis à jour automatiquement par Prisma
+
+  reservations Reservation[]                 // relation inverse (1 espace → N réservations)
+
+  @@map("espaces")                           // nom de la table SQL
+}
+
+model Prestataire {
+  id           Int             @id @default(autoincrement())
+  nom          String
+  type         TypePrestataire
+  email        String          @unique
+  telephone    String
+  createdAt    DateTime        @default(now())
+  updatedAt    DateTime        @updatedAt
+
+  reservations Reservation[]
+
+  @@map("prestataires")
+}
+
+model Client {
+  id           Int        @id @default(autoincrement())
+  prenom       String
+  nom          String
+  email        String     @unique
+  telephone    String
+  type         TypeClient
+  createdAt    DateTime   @default(now())
+  updatedAt    DateTime   @updatedAt
+
+  reservations Reservation[]
+
+  @@map("clients")
+}
+
+model Reservation {
+  id              Int               @id @default(autoincrement())
+  clientId        Int                              // FK obligatoire
+  espaceId        Int                              // FK obligatoire
+  prestataireId   Int?                             // FK optionnelle (nullable)
+  dateEvenement   DateTime          @db.Date       // stocké DATE (sans heure) en PostgreSQL
+  nombreInvites   Int
+  montantTotal    Decimal           @db.Decimal(10, 2)
+  statut          StatutReservation @default(CONFIRMEE)
+  createdAt       DateTime          @default(now())
+  updatedAt       DateTime          @updatedAt
+
+  // Relations (Prisma génère les JOIN automatiquement)
+  client        Client       @relation(fields: [clientId],      references: [id])
+  espace        Espace       @relation(fields: [espaceId],      references: [id])
+  prestataire   Prestataire? @relation(fields: [prestataireId], references: [id])
+  //              ^ le ? rend la relation nullable (prestataire optionnel)
+
+  @@map("reservations")
 }
