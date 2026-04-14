@@ -16,6 +16,10 @@ const ClientRepository = {
   async create(data) {
     return prisma.client.create({ data });
   },
+
+  async update(id, data) {
+    return prisma.client.update({ where: { id }, data });
+  },
  
   async hasReservations(id) {
     const count = await prisma.reservation.count({ where: { clientId: id } });

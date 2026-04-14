@@ -16,6 +16,10 @@ const EspaceRepository = {
   async create(data) {
     return prisma.espace.create({ data });
   },
+
+  async update(id, data) {
+    return prisma.espace.update({ where: { id }, data });
+  },
  
   async hasConfirmedReservations(id) {
     const count = await prisma.reservation.count({

@@ -27,6 +27,18 @@ const ReservationRepository = {
       include: INCLUDE_RELATIONS,
     });
   },
+
+  async update(id, data) {
+    return prisma.reservation.update({
+      where: { id },
+      data,
+      include: INCLUDE_RELATIONS,
+    });
+  },
+
+  async delete(id) {
+    return prisma.reservation.delete({ where: { id } });
+  },
 };
  
 module.exports = ReservationRepository;
