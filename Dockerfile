@@ -1,18 +1,16 @@
-FROM node:lts-alpine
+FROM python:3.12-slim
 
 WORKDIR /app
 
-# Installer netcat (important pour wait-for-db)
-RUN apk add --no-cache netcat-openbsd
+ENV PYTHONDONTWRITEBYTECODE=1
+ENV PYTHONUNBUFFERED=1
 
-COPY package*.json ./
+COPY requirements.txt ./
 
-RUN npm install
+RUN pip install --no-cache-dir -r requirements.txt
 
 COPY . .
 
-RUN npx prisma generate
-
 EXPOSE 3001
 
-CMD ["sh", "wait-for-db.sh"]
+CMD ["uvicorn", "app.main:app", "--host", "0.0.0.0", "--port", "3001"]
