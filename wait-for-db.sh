@@ -1,11 +1,13 @@
 #!/bin/sh
-echo "⏳ Attente de la base de données..."
+set -e
 
-while ! nc -z db 5432; do
-  sleep 1
+echo "Attente de la base de donnees..."
+
+until npx prisma migrate deploy; do
+  echo "Base indisponible ou migrations en attente. Nouvelle tentative dans 3 secondes..."
+  sleep 3
 done
 
-echo "✅ Base de données prête !"
+echo "Base prete. Demarrage de l'API..."
 
 npm start
-

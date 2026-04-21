@@ -1,16 +1,20 @@
-FROM python:3.12-slim
+FROM node:20-alpine
 
 WORKDIR /app
 
-ENV PYTHONDONTWRITEBYTECODE=1
-ENV PYTHONUNBUFFERED=1
+ENV NODE_ENV=production
 
-COPY requirements.txt ./
+COPY package.json package-lock.json ./
+COPY prisma ./prisma
 
-RUN pip install --no-cache-dir -r requirements.txt
+RUN npm ci --omit=dev && npx prisma generate
 
-COPY . .
+COPY src ./src
+COPY docs ./docs
+COPY wait-for-db.sh ./
+
+RUN chmod +x /app/wait-for-db.sh
 
 EXPOSE 3001
 
-CMD ["uvicorn", "app.main:app", "--host", "0.0.0.0", "--port", "3001"]
+CMD ["sh", "/app/wait-for-db.sh"]

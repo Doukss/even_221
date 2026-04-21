@@ -1,18 +1,27 @@
-# EVENT 221 avec FastAPI
+# EVENT 221 API
 
-Le backend du projet tourne maintenant avec FastAPI tout en gardant les routes existantes sous `/api/v1`.
+API REST Express/Prisma pour la gestion du centre d'evenements EVENT 221.
 
-## Lancer avec Docker
+## Lancement local
+
+```bash
+npm install
+npx prisma generate
+npx prisma migrate deploy
+npm start
+```
+
+API : `http://localhost:3001`
+
+Swagger : `http://localhost:3001/api-docs`
+
+Alias Swagger : `http://localhost:3001/docs`
+
+## Lancement avec Docker
 
 ```bash
 docker compose up --build
 ```
-
-API: `http://localhost:3001`
-
-Documentation Swagger: `http://localhost:3001/docs`
-
-Ancien alias de documentation: `http://localhost:3001/api-docs`
 
 ## Endpoints principaux
 
@@ -24,5 +33,6 @@ Ancien alias de documentation: `http://localhost:3001/api-docs`
 
 ## Notes
 
-- La base PostgreSQL existante est réutilisée.
-- Les règles métier de l'API Express ont été reproduites dans FastAPI.
+- L'application utilise PostgreSQL via Prisma.
+- Le conteneur applique les migrations Prisma avant de demarrer l'API.
+- La documentation Swagger statique est servie directement par Express.

@@ -5,6 +5,7 @@ const routes = require('./routes');
 const errorHandler = require('./middlewares/errorHandler');
 
 const app = express();
+const docsDir = path.join(__dirname, '..', 'docs');
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
@@ -14,11 +15,15 @@ if (process.env.NODE_ENV !== 'test') {
 }
 
 app.get('/api-docs', (req, res) => {
-  res.sendFile(path.join(__dirname, '..', 'docs', 'swagger-ui.html'));
+  res.sendFile(path.join(docsDir, 'swagger-ui.html'));
 });
 
 app.get('/api-docs/swagger.json', (req, res) => {
-  res.sendFile(path.join(__dirname, '..', 'docs', 'swagger.json'));
+  res.sendFile(path.join(docsDir, 'swagger.json'));
+});
+
+app.get('/docs', (req, res) => {
+  res.redirect('/api-docs');
 });
 
 app.use('/api/v1', routes);
