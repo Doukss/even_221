@@ -12,8 +12,7 @@ services:
       DB_RETRY_DELAY_MS: 3000
 
   db:
-    image: postgres:15
-    restart: always
+    image: postgres:15    restart: always
     environment:
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: passer0412
